@@ -41,9 +41,13 @@ const chartSetup = (svg, x, y, axisTitles, chartTitle, description) => {
     .text(axisTitles['y']);
 };
 
-// Function to draw bar chart
+// Function to draw bar chart with D3 annotations
 const drawBars = (svg, dataset, x, y) => {
   const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+  // Find max salary and max job count
+  const maxSalary = d3.max(dataset, d => d.value);
+  const maxJobCount = d3.max(dataset, d => d.count);
 
   const bars = svg.selectAll(".bar")
     .data(dataset)
@@ -58,7 +62,7 @@ const drawBars = (svg, dataset, x, y) => {
     .duration(1000)
     .attr("y", d => y(d.value))
     .delay((d, i) => i * 100)
-    .attr("height", function(d) { return height - y(d.value); });
+    .attr("height", function (d) { return height - y(d.value); });
 
   // Add value labels to bars
   svg.selectAll(".bar-label")
@@ -71,6 +75,52 @@ const drawBars = (svg, dataset, x, y) => {
     .style("font-size", "12px")
     .style("fill", "#000")
     .text(d => d.value);
+
+  // Annotations
+  let annotations
+  if (dataset.find(d => d.value === maxSalary).title === dataset.find(d => d.count === maxJobCount).title) {
+    annotations = [
+      {
+        note: {
+          label: `${dataset.find(d => d.value === maxSalary).title} has the highest salary and job count.`,
+          wrap: 200
+        },
+        x: x(dataset.find(d => d.value === maxSalary).title) + x.bandwidth(),
+        y: y(maxSalary),
+        dy: 10,
+        dx: 10
+      }
+    ];
+  }   else {
+    annotations = [
+      {
+        note: {
+          label: `${dataset.find(d => d.value === maxSalary).title} has the highest salary.`,
+          wrap: 200
+        },
+        x: x(dataset.find(d => d.value === maxSalary).title) + x.bandwidth(),
+        y: y(maxSalary),
+        dy: 10,
+        dx: 10
+      },
+      {
+        note: {
+          label: `${dataset.find(d => d.count === maxJobCount).title} has the highest job count.`,
+          wrap: 150
+        },
+        x: x(dataset.find(d => d.count === maxJobCount).title) + x.bandwidth(),
+        y: y(dataset.find(d => d.count === maxJobCount).value),
+        dy: 10,
+        dx: 50
+      }
+    ];
+  }
+  const makeAnnotations = d3.annotation()
+    .annotations(annotations);
+
+  svg.append("g")
+    .attr("class", "annotation-group")
+    .call(makeAnnotations);
 };
 
 // Function to draw pie chart

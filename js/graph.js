@@ -86,6 +86,7 @@ function myChartAddAnnotations(svg, annotations) {
       .annotations(annotations);
 
     svg.append("g")
+      .attr("class", "annotation-group")
       .call(makeAnnotations);
 }
 
@@ -131,10 +132,9 @@ function loadScene0() {
         const annotations = [{
             note: {
                 label: "Average salary remained stable until 2021, after which it began to rise significantly.",
-                wrap: 200,
+                wrap: 300,
                 padding: 0
             },
-            color: ["#3342ff"],
             x: x(2021),
             y: y(94000),
             dy: -110,
