@@ -46,8 +46,8 @@ function myChartAddAxes(svg, x, y, width, height) {
     // Add x-axis label
     svg.append("text")
       .attr("text-anchor", "middle")
-      .attr("transform", `translate(-50,${height / 2}) rotate(-90)`)
-      .text('Salary in USD');// Format y-axis to show compact salary values
+      .attr("transform", `translate(-60,${height / 2}) rotate(-90)`)
+      .text('Average in Salary in USD');// Format y-axis to show compact salary values
 
     // Add y-axis label
     svg.append("text")
