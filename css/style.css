@@ -19,3 +19,47 @@
 .description {
   width: 70%;
 }
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+/* Base button styles */
+.btn {
+  padding: 12px 24px; /* Increased padding for larger button size */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px; /* Increased font size for better readability */
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Primary button styles */
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Secondary button styles */
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn:disabled {
+  background-color: #e0e0e0;
+  color: #6c757d;
+  cursor: not-allowed;
+  pointer-events: none;
+}
