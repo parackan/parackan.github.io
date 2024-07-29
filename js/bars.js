@@ -1,6 +1,7 @@
 const margin = { top: 70, right: 30, bottom: 70, left: 80 };
 const width = 600 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
+const formatCurrency = d3.format("$,.0f");
 
 const dataPath = "../data/ds_salaries.csv";
 
@@ -26,12 +27,12 @@ const chartSetup = (svg, x, y, axisTitles, chartTitle, description) => {
 
   // Add y-axis
   svg.append("g")
-    .call(d3.axisLeft(y));
+    .call(d3.axisLeft(y).tickFormat(d3.format("$,.0f")));
 
   // Add x-axis label
   svg.append("text")
     .attr("text-anchor", "middle")
-    .attr("transform", `translate(-50,${height / 2}) rotate(-90)`)
+    .attr("transform", `translate(-60,${height / 2}) rotate(-90)`)
     .text(axisTitles['x']);
 
   // Add y-axis label
@@ -74,7 +75,7 @@ const drawBars = (svg, dataset, x, y) => {
     .attr("text-anchor", "middle")
     .style("font-size", "12px")
     .style("fill", "#000")
-    .text(d => d.value);
+    .text(d => formatCurrency(d.value));
 
   // Annotations
   let annotations
@@ -263,7 +264,7 @@ function loadScene1() {
 
   const axisTitles = {
     'y': 'Experience Level',
-    'x': 'Salary in USD',
+    'x': 'Average Salary in USD',
   };
 
   const description = "<p>This chart compares the average salary across different experience levels.</p>" +
@@ -283,7 +284,7 @@ function loadScene2() {
 
   const axisTitles = {
     'y': 'Employment Type',
-    'x': 'Salary in USD',
+    'x': 'Average Salary in USD',
   };
 
   const description = "<p>This chart shows the average salary by different types of employment.</p>" +
@@ -302,7 +303,7 @@ function loadScene3() {
 
   const axisTitles = {
     'y': 'Company Size',
-    'x': 'Salary in USD',
+    'x': 'Average Salary in USD',
   };
 
   const description = "<p>This chart illustrates the average salary based on company size.</p>" +
@@ -320,7 +321,7 @@ function loadScene4() {
 
   const axisTitles = {
     'y': 'Remote Type',
-    'x': 'Salary in USD',
+    'x': 'Average Salary in USD',
   };
 
   const description = "<p>This chart details the average salary for various remote work arrangements.</p>" +
